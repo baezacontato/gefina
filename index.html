@@ -18,28 +18,73 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Construtora Meridiano</td>
-                    <td>125000</td>
-                    <td>2026-06-01</td>
-                    <td>2026-06-15</td>
-                    <td>Pendente</td>
-                </tr>
-                <tr>
-                    <td>Construtora Meridiano</td>
-                    <td>348000</td>
-                    <td>2026-05-12</td>
-                    <td>2026-06-11</td>
-                    <td>Paga</td>
-                </tr>
-                <tr>
-                    <td>Gráfica Aurora</td>
-                    <td>96500</td>
-                    <td>2026-06-20</td>
-                    <td>2026-07-20</td>
-                    <td>Pendente</td>
-                </tr>
+                
             </tbody>
         </table>
+        <script>
+            const invoices = [
+                {
+                    id: 1,
+                    amount: 125000,
+                    status: 'pending',
+                    issueDate: '2026-06-01',
+                    dueDate: '2026-06-15',
+                    customer: { id: 1, name: 'Construtora Meridiano' },
+                },
+                {
+                    id: 2,
+                    amount: 348000,
+                    status: 'paid',
+                    issueDate: '2026-05-12',
+                    dueDate: '2026-06-11',
+                    customer: { id: 1, name: 'Construtora Meridiano' },
+                },
+                {
+                    id: 3,
+                    amount: 96500,
+                    status: 'pending',
+                    issueDate: '2026-06-20',
+                    dueDate: '2026-07-20',
+                    customer: { id: 2, name: 'Gráfica Aurora' },
+                },
+                {
+                    id: 4,
+                    amount: 1500,
+                    status: 'paid',
+                    issueDate: '2026-09-30',
+                    dueDate: '2026-10-20',
+                    customer: { id: 3, name: 'Alex Bessa' },
+                }
+            ];
+
+            function statusLabel(status) {
+                if (status !== 'paid') {
+                return 'Pendente';
+                }
+
+                return 'Paga';
+            }
+
+            function addCell(row, value) {
+                const cell = document.createElement('td');
+                cell.textContent = value;
+                row.appendChild(cell);
+            }
+
+            const tableBody = document.querySelector('tbody');
+
+            for (let i = 0; i < invoices.length; i = i + 1) {
+                const invoice = invoices[i];
+                const row = document.createElement('tr');
+
+                addCell(row, invoice.customer.name);
+                addCell(row, invoice.amount);
+                addCell(row, invoice.issueDate);
+                addCell(row, invoice.dueDate);
+                addCell(row, statusLabel(invoice.status));
+
+                tableBody.appendChild(row);
+            }
+        </script>
     </body>
 </html>
