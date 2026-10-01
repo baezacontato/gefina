@@ -7,21 +7,14 @@
     </head>
     <body>
         <h1>Faturas</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Cliente</th>
-                    <th>Valor</th>
-                    <th>Emissão</th>
-                    <th>Vencimento</th>
-                    <th>Situação</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
-        <script>
+       
+        <div></div>
+
+        <script crossorigin src='https://unpkg.com/react@18/umd/react.development.js'></script>
+        <script crossorigin src='https://unpkg.com/react-dom@18/umd/react-dom.development.js'></script>
+        <script crossorigin src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+
+        <script type='text/babel'>
             const invoices = [
                 {
                     id: 1,
@@ -57,34 +50,35 @@
                 }
             ];
 
+            const container = document.querySelector('div');
+            
             function statusLabel(status) {
-                if (status !== 'paid') {
-                return 'Pendente';
-                }
-
-                return 'Paga';
+                return status === 'paid' ? 'Pago' : 'Pendente';
             }
 
-            function addCell(row, value) {
-                const cell = document.createElement('td');
-                cell.textContent = value;
-                row.appendChild(cell);
-            }
-
-            const tableBody = document.querySelector('tbody');
-
-            for (let i = 0; i < invoices.length; i = i + 1) {
-                const invoice = invoices[i];
-                const row = document.createElement('tr');
-
-                addCell(row, invoice.customer.name);
-                addCell(row, invoice.amount);
-                addCell(row, invoice.issueDate);
-                addCell(row, invoice.dueDate);
-                addCell(row, statusLabel(invoice.status));
-
-                tableBody.appendChild(row);
-            }
+            ReactDOM.createRoot(container).render(
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Valor</th>
+                        <th>Emissão</th>
+                        <th>Vencimento</th>
+                        <th>Situação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{invoices[0].customer.name}</td>
+                            <td>{invoices[0].amount}</td>
+                            <td>{invoices[0].issueDate}</td>
+                            <td>{invoices[0].dueDate}</td>
+                            <td>{statusLabel(invoices[0].status)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            );
         </script>
+        
     </body>
 </html>
