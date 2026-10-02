@@ -7,56 +7,60 @@
     </head>
     <body>
         <h1>Faturas</h1>
-       
+
         <div></div>
 
-        <script crossorigin src='https://unpkg.com/react@18/umd/react.development.js'></script>
-        <script crossorigin src='https://unpkg.com/react-dom@18/umd/react-dom.development.js'></script>
-        <script crossorigin src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
+        <script
+            crossorigin
+            src='https://unpkg.com/react@18/umd/react.development.js'>
+        </script>
+        <script
+            crossorigin
+            src='https://unpkg.com/react-dom@18/umd/react-dom.development.js'>
+        </script>
+        <script
+            crossorigin
+            src='https://unpkg.com/@babel/standalone/babel.min.js'>
+        </script>
 
         <script type='text/babel'>
-            const invoices = [
-                {
-                    id: 1,
-                    amount: 125000,
-                    status: 'pending',
-                    issueDate: '2026-06-01',
-                    dueDate: '2026-06-15',
-                    customer: { id: 1, name: 'Construtora Meridiano' },
-                },
-                {
-                    id: 2,
-                    amount: 348000,
-                    status: 'paid',
-                    issueDate: '2026-05-12',
-                    dueDate: '2026-06-11',
-                    customer: { id: 1, name: 'Construtora Meridiano' },
-                },
-                {
-                    id: 3,
-                    amount: 96500,
-                    status: 'pending',
-                    issueDate: '2026-06-20',
-                    dueDate: '2026-07-20',
-                    customer: { id: 2, name: 'Gráfica Aurora' },
-                },
-                {
-                    id: 4,
-                    amount: 1500,
-                    status: 'paid',
-                    issueDate: '2026-09-30',
-                    dueDate: '2026-10-20',
-                    customer: { id: 3, name: 'Alex Bessa' },
-                }
-            ];
+            const invoices = [{
+                id: 1,
+                amount: 125000,
+                status: 'pending',
+                issueDate: '2026-06-01',
+                dueDate: '2026-06-15',
+                customer: { id: 1, name: 'Construtora Meridiano' },
+            }, {
+                id: 2,
+                amount: 348000,
+                status: 'paid',
+                issueDate: '2026-05-12',
+                dueDate: '2026-06-11',
+                customer: { id: 1, name: 'Construtora Meridiano' },
+            }, {
+                id: 3,
+                amount: 96500,
+                status: 'pending',
+                issueDate: '2026-06-20',
+                dueDate: '2026-07-20',
+                customer: { id: 2, name: 'Gráfica Aurora' },
+            }, {
+                id: 4,
+                amount: 1500,
+                status: 'paid',
+                issueDate: '2026-09-30',
+                dueDate: '2026-10-20',
+                customer: { id: 3, name: 'Alex Bessa' },
+            }];
 
-            const container = document.querySelector('div');
-            
+            const root = document.querySelector('div');
+
             function statusLabel(status) {
                 return status === 'paid' ? 'Pago' : 'Pendente';
             }
 
-            function InvoiceRow(props) {
+            const InvoiceRow = function (props) {
                 const invoice = props.invoice;
 
                 return (
@@ -70,17 +74,17 @@
                 );
             }
 
-            function InvoiceTable(props) {
+            const InvoiceTable = function (props) {
                 return (
                     <table>
                         <thead>
-                        <tr>
-                            <th>Cliente</th>
-                            <th>Valor</th>
-                            <th>Emissão</th>
-                            <th>Vencimento</th>
-                            <th>Situação</th>
-                        </tr>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Valor</th>
+                                <th>Emissão</th>
+                                <th>Vencimento</th>
+                                <th>Situação</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {props.invoices.map(function (invoice) {
@@ -94,8 +98,12 @@
                 );
             }
 
-            ReactDOM.createRoot(container).render(<InvoiceTable invoices={invoices} />);
+            const App = function () {
+                return <InvoiceTable invoices={invoices} />;
+            }
+            
+            ReactDOM.createRoot(root).render(<App/>);
         </script>
-        
+
     </body>
 </html>
