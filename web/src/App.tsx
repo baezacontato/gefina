@@ -1,41 +1,41 @@
+import { useEffect, useState } from 'react';
+
 import InvoiceTable from './InvoiceTable.tsx';
 import type { Invoice } from './invoice.ts';
 
-const invoices: Invoice[] = [{
-    id: 1,
-    amount: 125000,
-    status: 'pending',
-    issueDate: '2026-06-01',
-    dueDate: '2026-06-15',
-    customer: {
-        id: 1,
-        name: 'Construtora Meridiano',
-        email: 'contato@meridiano.com'
-    },
-}, {
-    id: 2,
-    amount: 348000,
-    status: 'paid',
-    issueDate: '2026-05-12',
-    dueDate: '2026-06-11',
-    customer: {
-        id: 1,
-        name: 'Construtora Meridiano',
-        email: 'contato@meridiano.com'
-    },
-}, {
-    id: 3,
-    amount: 96500,
-    status: 'pending',
-    issueDate: '2026-06-20',
-    dueDate: '2026-07-20',
-    customer: {
-        id: 2,
-        name: 'Gráfica Aurora',
-        email: 'contato@aurora.com'
-    },
-}];
-
 export default function App() {
-    return <InvoiceTable invoices={invoices} />;
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadInvoices = async () => {
+      try {
+        const response = await fetch('/api/invoices');
+
+        if (response.ok) {
+          const data = await response.json();
+          setInvoices(data);
+        } else {
+          setError('Não foi possível carregar as faturas.');
+        }
+      } catch {
+        setError('Não foi possível carregar as faturas.');
+      }
+
+      setLoading(false);
+    };
+
+    loadInvoices();
+  }, []);
+
+  if (loading) {
+    return <p>Carregando faturas...</p>;
+  }
+
+  if (error !== null) {
+    return <p>{error}</p>;
+  }
+
+  return <InvoiceTable invoices={invoices} />;
 }
